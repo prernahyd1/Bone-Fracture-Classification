@@ -1,0 +1,446 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <!-- <link rel="stylesheet" href="stylel.css"> -->
+  <link rel="stylesheet" href="app.py">
+  <link rel="stylesheet" href="output.html">
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+  <title>Bone Fracture Classification</title>
+</head>
+<style>
+  #result {
+    color: black;
+    font-family: 'Canva sans';
+    font-size:35px;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: 'Canva sans';
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: #080808;
+    color: black;
+  }
+
+  #header {
+    width: 100%;
+    height: 100vh;
+    background-image: url('static/imgs/fracture classifier.gif');
+    background-size: cover;
+    background-position: center;
+  }
+
+  #header background-image {
+    opacity: 0.5;
+  }
+
+  .container {
+    padding: 0px 10px 10%;
+  }
+
+
+  nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-right: 100px;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 10px 20px;
+}
+
+nav ul li a {
+    color: black;
+    font-family: 'Canva sans';
+    text-decoration: none;
+    font-size: 20px;
+    position: relative;
+}
+
+  nav ul li a::after {
+    content: '';
+    width: 0;
+    height: 3px;
+    background: #C2DEDC;
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    transition: 0.5s
+  }
+
+  nav ul li a:hover::after {
+    width: 100%;
+  }
+
+  .header-text {
+    font-family: 'bookman old style';
+    margin-top: 10%;
+    font-size: 30px;
+    padding: 10px;
+  }
+
+  .header-text h1 {
+    font-family: 'Ysabeau SC';
+    font-size: 50px;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  .header-text h1 span {
+    color: #E7B10A;
+  }
+
+  .header-text p {
+    text-align: center;
+    font-size: 20px;
+    font-style: 'Dancing Script'
+  }
+
+  .button {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 10px;
+    background-color: none;
+    padding: 15px;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+  }
+
+  .sub-title p {
+    padding: 10px;
+    padding-top: 20px;
+    font-size: 25px;
+  }
+
+
+
+  #btn a {
+    text-decoration: none;
+    color: #080808;
+  }
+
+  .btntext {
+    text-decoration: none;
+    color: #f9f8f8;
+  }
+
+  button {
+    width: 150px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: #C2DEDC;
+    color: #080808;
+    font-size: 18px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+  }
+
+  .check-box {
+    width: 80px;
+    height: 80px;
+    border-radius: 40px;
+    box-shadow: 0 0 12px -2px rgba(0, 0, 0, 0.5);
+    position: absolute;
+    top: 0;
+    right: -40px;
+    opacity: 0;
+  }
+
+  #Images {
+    padding: 50px 0;
+    text-align: center;
+    background-image:url('static/imgs/back4.jpg');
+    background-size:cover;
+  }
+
+  .sub-title {
+    padding: 40px;
+    text-align: center;
+  }
+
+  .work-list {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr)); /* Adjust to have 4 images in one line */
+    justify-items: center; /* Center the grid items horizontally */
+    grid-gap: 40px;
+    margin-top: -20px;
+    padding: 100px;
+}
+
+.work {
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+}
+
+.work img {
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    display: block;
+    transition: transform 0.5s;
+}
+
+
+  .work:hover {
+    cursor: pointer;
+  }
+
+  .work:hover h3 {
+    width: 150px;
+    padding: 8px 10px;
+    visibility: visible;
+    color:black;
+    font-size:24px;
+  }
+  
+  .layer {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    font-size: 25px;
+    margin-top: 20px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    transition: height 0.5s;
+    visibility: hidden;
+  }
+
+  .layer p {
+    margin-top: 20px;
+    font-size: 22px;
+  }
+
+  .layer h3 {
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .layer a {
+    margin-top: 20px;
+    color: #ff004f;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 60px;
+    background: #fff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  .work:hover img {
+    transform: scale(1.1);
+  }
+
+  .work:hover .layer {
+    height: 100%;
+  }
+  #Predict {
+    text-align: center;
+    background-image:url('static/imgs/drop1.gif');
+    background-size:cover;
+    height: 400px;
+  }
+
+  .container3 {
+    position: relative;
+    width: 100%;
+    height: 300px;
+  }
+
+  .form {
+    text-align: center;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 700px;
+    width: 100%;
+    background-color: #030064;
+    color: rgb(251, 248, 247);
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .predict {
+    width: 150px;
+    height: 50px;
+    border: none;
+    outline: none;
+    background: #C2DEDC;
+    color: #080808;
+    font-size: 18px;
+    border-radius: 40px;
+    text-align: center;
+    box-shadow: 0 6px 20px -5px rgba(0, 0, 0, 0.4);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    list-style: none;
+  }
+</style>
+<body>
+  <div id="header">
+    <div class="container">
+      <nav>
+        <ul>
+          <li><a href="#Images">About</a></li>
+          <li><a href="#Predict">Classify</a></li>
+        </ul>
+      </nav>
+      <br><br>
+      <div class="header-text">
+      </div>
+      <br><br><br><br><br><br><br><br><br>
+      <div class="button">
+       </a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div id="Images">
+    <div class="container">
+      <h1 class="sub-title">About the Fractures</a>
+        <p>------------------------------------------</p>
+        <div class="work-list">
+          <div class="work">
+            <a href="avulusion.html">
+            <img
+              src="https://www.shutterstock.com/image-vector/avulsion-fracture-bone-infographics-vector-600nw-1295907838.jpg">
+              <div class="layer">
+              <h3>Avulsion Fracture</h3>
+            </div>
+          </a>
+          </div>
+          <div class="work">
+            <a href="compression.html">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTtCx2eQ0HCrVhXDneK_zcxlHI90QDOZcquA&usqp=CAU">
+            <div class="layer">
+              <h3>Compression-Crush Fracture</h3>
+            </div>
+          </a>
+          </div>
+          <div class="work">
+            <a href="greenstick.html">
+            <img
+              src="data:image/png;base64,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">
+            <div class="layer">
+              <h3>Greenstick Fracture</h3>
+            </div>
+          </a>
+          </div>
+          <div class="work">
+            <a href="hairline.html">
+            <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS7pmxFb8nZD_-SKjJbFG651m5GJVIJw_z4BQ&usqp=CAU">
+            <div class="layer">
+              <h3>Hairline Fracture</h3>
+            </div>
+          </a>
+          </div>
+          <div class="work">
+            <a href="pathological.html">
+            <img
+              src="https://havenpharmacy.ie/wp-content/uploads/2018/05/osteoperosis.jpg">
+            <div class="layer">
+              <h3>Pathological Fracture</h3>
+            </div>
+          </a>
+          </div>
+          <div class="work">
+            <a href="spiral.html">
+            <img
+              src="https://api.kramesstaywell.com/Content/6066ca30-310a-4170-b001-a4ab013d61fd/medical-illustrations/Images/85993_5">
+            <div class="layer">
+              <h3>Spiral Fracture</h3>
+            </div>
+          </a>
+          </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+
+  <div id="Predict">
+    <div class="container">
+      <br><br>
+      <div class="form">
+        <br><br><br><br><br>
+        <form action="http://localhost:5000/" id="upload-file" method="post" enctype="multipart/form-data">
+          <label for="imageUpload" class="upload-label" >Choose...</label>
+          <input type="file" name="image" id="imageUpload" accept=".png, .jpg, .jpeg" />
+          <div class="image-section">
+            <div class="img-preview">
+              <div id="imagePreview"></div>
+              <br>
+              <div>
+                <button type="button" class="predict" id="btn-predict">Classify!</button>
+
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="loader" style="display: none"></div>
+      <h3>
+        <span id="result"> </span>
+      </h3>
+    </div>
+  </div>
+
+
+  
+<footer>
+  <script src="{{ url_for('static', filename='js/main.js') }}" type="text/javascript"></script>
+</footer>
+
+</html>
