@@ -2,7 +2,7 @@
 The  Bone-Fracture-Classification can accurately classify the given input image as the correct class of Fracture. This project can predict an image among 6 different classes of fracture.
 <br>The project classifies the images using VGG-16 Transfer learning model over Convolutional Neural Network and Deep Learning.
 <br><br>
-Types of fractures classified:
+Types of fractures classified:<br>
 1.Avulsion Fracture<br>
 2.Compression-crush Fracture<br>
 3.Greenstick Fracture<br>
